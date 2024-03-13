@@ -76,7 +76,7 @@ class TravauxController extends AbstractController
                 $newFilename = uniqid() . '.' . $file->guessExtension();
                 
                 // Déplacez le fichier vers le dossier de destination
-                $file->move('images', $newFilename);
+                $file->move('images_bt', $newFilename);
         
                 // Créez un nouvel objet pour stocker le nom de fichier et l'ID du travail associé
                 $fileEntity = new File();
@@ -151,7 +151,7 @@ class TravauxController extends AbstractController
                 $newFilename = uniqid() . '.' . $file->guessExtension();
                 
                 // Déplacez le fichier vers le dossier de destination
-                $file->move('images', $newFilename);
+                $file->move('images_bt', $newFilename);
         
                 // Créez un nouvel objet pour stocker le nom de fichier et l'ID du travail associé
                 $fileEntity = new File();
