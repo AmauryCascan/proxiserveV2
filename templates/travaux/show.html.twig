@@ -85,7 +85,7 @@
     <div class="my-5 inline-block  w-2/5">
         {% for index, file in travaux.files %}
             <div id="fileEmbed{{ index }}" class="pdf-embed" style="display: {% if index == 0 %}block{% else %}none{% endif %};">
-                <embed src="{{ asset('images/' ~ file.fileName) }}" type="application/pdf" width="100%" height="600px" />
+                <embed src="{{ asset('images_bt/' ~ file.fileName) }}" type="application/pdf" width="100%" height="600px" />
             </div>
         {% endfor %}
         <div class="text-center mt-3">
