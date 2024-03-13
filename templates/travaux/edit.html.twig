@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editer Bon Travaux{% endblock %}
+
+{% block body %}
+{% include '_partials/_navbar.html.twig' %}
+    <h1 class="mt-10 text-center text-xl text-gray-700 uppercase  dark:text-white">EDITER Bon VTH</h1>
+    {{ include('travaux/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+{% endblock %}

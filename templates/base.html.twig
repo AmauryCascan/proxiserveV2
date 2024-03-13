@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+        
+        {% block stylesheets %}
+        {% endblock %}
+        {% block javascripts %}
+        {% endblock %}
+    </head>   
+    <body class="dark:bg-slate-800"> 
+           
+        <div class="container mx-auto px-4"> 
+            {% block body %}{% endblock %}
+        </div>  
+        <script>
+            let icon1 = document.getElementById("icon1");
+            let icon2 = document.getElementById("icon2");
+            let icon3 = document.getElementById("icon3");
+            let menu1 = document.getElementById("menu1");
+            let menu2 = document.getElementById("menu2");
+            let menu3 = document.getElementById("menu3");
+
+            const showMenu1 = (flag) => {
+                if (flag) {
+                    icon1.classList.toggle("rotate-180");
+                    menu1.classList.toggle("hidden");
+                }
+            };
+            const showMenu2 = (flag) => {
+                if (flag) {
+                    icon2.classList.toggle("rotate-180");
+                    menu2.classList.toggle("hidden");
+                }
+            };
+            const showMenu3 = (flag) => {
+                if (flag) {
+                    icon3.classList.toggle("rotate-180");
+                    menu3.classList.toggle("hidden");
+                }
+            };
+        </script>
+         <script src="https://cdn.tailwindcss.com"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+    </body>
+</html>

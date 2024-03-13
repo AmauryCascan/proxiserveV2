@@ -1,0 +1,127 @@
+<div class="relative overflow-x-auto w-full mt-4">
+
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">
+                    N° BT
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Dernier RDV
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Etat
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Type
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Secteur
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Date Début
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                   Date Fin
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                   Chargé de secteur
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Montant initial
+                    {% set total = 0 %}
+                        {% for travaux in travauxList %}
+                    {% set total = total + travaux.price %}
+                    {% endfor %}    
+                    <p> (total : {{total}} &#8364;) </p>
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    N° de Commande
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Nombre de Commentaires
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for travaux in travauxList %}
+            {% if  is_granted("ROLE_ADMIN") or app.user.email == travaux.user.email %}
+                {% if travaux.etat.name == 'FACTURE' %}
+                    <tr class="bg-green-200 border-b dark:bg-green-900 dark:border-gray-700">
+                {% elseif travaux.etat.name == 'ANNULE' %}
+                    <tr class="bg-red-200 border-b dark:bg-red-900 dark:border-gray-700">    
+                {% else %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                {% endif %}   
+                <th scope="row" class="ps-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   {{ travaux.numero }}
+                </th>
+                <td class="ps-6 py-4">
+                    {{ travaux.rdvAt ? travaux.rdvAt|date('d-m-Y') : '' }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.etat.name }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.type.name }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.secteur.name }}
+                </td>
+                <td class="ps-6 py-4">
+                   {{ travaux.startedAt ? travaux.startedAt|date('d-m-Y') : '' }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.finishedAt ? travaux.finishedAt|date('d-m-Y') : '' }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.user ? travaux.user.firstname : '' }} {{ travaux.user ? travaux.user.lastname : '' }}
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.price }} &#8364;
+                </td>
+                <td class="ps-6 py-4">
+                    {{ travaux.commande }}
+                </td>
+                <td class="ps-6 py-4">
+                    <div class="relative">
+                        <button data-dropdown-toggle="dropdown_{{ loop.index }}" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                            {{ travaux.comments|length }} Commentaires 
+                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+                        <!-- Dropdown menu -->
+                        <div class="absolute right-0 mt-2 w-full bg-white divide-y divide-gray-100 dark:text-white rounded-lg shadow z-10 dark:bg-gray-700 dark:divide-gray-600 hidden" id="dropdown_{{ loop.index }}">
+                            <ul class="py-2 text-sm" aria-labelledby="dropdownDefaultButton">
+                                <dl class="divide-y divide-gray-600">  
+                                    {% for comment in travaux.comments %}
+                                        <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                            <dt class=" px-1 text-xs font-medium dark:text-gray-400">{{comment.user.firstname}} {{comment.user.lastname}}</dt>
+                                            <dd class="mt-1 text-sm sm:col-span-2 sm:mt-0">
+                                            <ul>
+                                                <li class="text-xs dark:text-gray-400">{{ comment.publishedAt ? comment.publishedAt|date('H:i | d-m-Y ') : '' }}</li>
+                                                <li class="dark:text-white-700">{{ comment.content }}</li>
+                                            </ul>    
+                                            </dd>
+                                        </div> 
+                                    {% endfor %}
+                                </dl>    
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+                <td class="px-6 py-4 flex"> 
+                    <button class="flex justify-start items-center hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">
+                        <a href="{{ path('app_travaux_show', {'id': travaux.id}) }}">voir</a>
+                    </button>
+                </td>
+            </tr>
+            {% endif %}   
+            {% endfor %} 
+        </tbody>
+    </table>
+</div>

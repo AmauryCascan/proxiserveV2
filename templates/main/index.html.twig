@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil{% endblock %}
+
+{% block body %}
+
+<div class="m-auto w-80 mt-20 p-4 text-center bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Proxiserve</h5>
+    <p class="mb-5 text-base text-gray-500 sm:text-lg dark:text-gray-400">Choisissez un client</p>
+    <div class="items-center justify-center space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
+        <a href="{{ path('app_travaux_index') }}" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">
+            <div class="-mt-1 font-sans text-sm font-semibold">Val Touraine Habitat</div>   
+        </a>
+        {% if  is_granted("ROLE_ADMIN") %}
+        <a href="#" class="w-full sm:w-auto bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 text-white rounded-lg inline-flex items-center justify-center px-4 py-2.5 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700">           
+            <div class="-mt-1 font-sans text-sm font-semibold">Touraine Logement</div>     
+        </a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+{% include '_partials/_navbar.html.twig' %}
+<h1 class="mt-2 text-center text-xl text-gray-700 uppercase  dark:text-white">Utilisateurs</h1>
+<div class="relative overflow-x-auto w-full mt-4">
+    <button class="flex justify-start items-center hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">
+        <a href="{{ path('app_user_new') }}">Nouvel utilisateur</a>
+    </button>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">
+                    Email
+                </th><th scope="col" class="ps-6 py-3">
+                    Role
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Prénom
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                    Nom
+                </th>
+                <th scope="col" class="ps-6 py-3">
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                   {{ user.email }}
+                </th>
+                <td class="px-6 py-4">
+                    {{ user.roles ? user.roles|json_encode : '' }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ user.firstname }}
+                </td>
+                <td class="px-6 py-4">
+                    {{ user.lastname }}
+                </td>
+                <td class="px-6 py-4 flex">
+                    <button class="flex justify-start items-center hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}">éditer</a>
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+    
+
+    
+{% endblock %}

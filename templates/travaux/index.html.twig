@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}En cours{% endblock %}
+
+{% block body %}
+
+{% include '_partials/_navbar.html.twig' %}
+
+<h1 class="mt-2 text-center text-xl text-gray-700 uppercase  dark:text-white">Travaux en cours VTH</h1>
+
+{% include 'travaux/_partials/_list.html.twig' %}
+    
+{% endblock %}

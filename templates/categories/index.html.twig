@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Etat index{% endblock %}
+
+{% block body %}
+{% include '_partials/_navbar.html.twig' %}
+    <h1 class="mt-2 text-center text-xl text-gray-700 uppercase  dark:text-white">Catégories</h1>
+<div class="flex">    
+<div class="relative overflow-x-auto w-1/4 mt-4">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">Etat</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etat in etats %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td scope="row" class="ps-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ etat.name }}</td>
+                <td>
+                    {{ include('categories/etat/_delete_form.html.twig') }}
+                    <a href="{{ path('app_etat_edit', {'id': etat.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ form_start(formEtat, {'attr': {'class': 'mx-2'}}) }}
+            {{ form_widget(formEtat.name, {
+                'attr': {
+                    'class': 'm-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder': ' ',
+                    'required': true       
+                }
+            }) }}
+            <button type="submit"class="mt-2 content-center inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter</button>  
+        {{ form_end(formEtat) }}
+</div>
+<div class="relative overflow-x-auto w-1/4 mt-4">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">Type</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for type in types %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td scope="row" class="ps-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ type.name }}</td>
+                <td>
+                    {{ include('categories/type/_delete_form.html.twig') }}
+                    <a href="{{ path('app_type_edit', {'id': type.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ form_start(formType, {'attr': {'class': 'mx-2'}}) }}
+            {{ form_widget(formType.name, {
+                'attr': {
+                    'class': 'm-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder': ' ',
+                    'required': true       
+                }
+            }) }}
+            <button type="submit"class="mt-2 content-center inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter</button>  
+        {{ form_end(formType) }}
+</div> 
+<div class="relative overflow-x-auto w-1/4 mt-4">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">Secteur</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for secteur in secteurs %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td scope="row" class="ps-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ secteur.name }}</td>
+                <td>
+                    {{ include('categories/secteur/_delete_form.html.twig') }}
+                    <a href="{{ path('app_secteur_edit', {'id': secteur.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ form_start(formSecteur, {'attr': {'class': 'mx-2'}}) }}
+            {{ form_widget(formSecteur.name, {
+                'attr': {
+                    'class': 'm-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder': ' ',
+                    'required': true       
+                }
+            }) }}
+            <button type="submit"class="mt-2 content-center inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter</button>  
+        {{ form_end(formSecteur) }}
+</div> 
+<div class="relative overflow-x-auto w-1/4 mt-4">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+                <th scope="col" class="ps-6 py-3">Robinetterie</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rob in robs %}
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td scope="row" class="ps-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ rob.name }}</td>
+                <td>
+                    {{ include('categories/rob/_delete_form.html.twig') }}
+                    <a href="{{ path('app_rob_edit', {'id': rob.id}) }}">editer</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ form_start(formRob, {'attr': {'class': 'mx-2'}}) }}
+            {{ form_widget(formRob.name, {
+                'attr': {
+                    'class': 'm-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder': ' ',
+                    'required': true       
+                }
+            }) }}
+            <button type="submit"class="mt-2 content-center inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter</button>  
+        {{ form_end(formRob) }}
+</div> 
+</div>       
+{% endblock %}

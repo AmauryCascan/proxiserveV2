@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Travaux{% endblock %}
+
+{% block body %}
+{% include '_partials/_navbar.html.twig' %}
+<div class="flex items-stretch">
+    <div class="inline-block dark:text-white w-72 mx-10">
+        <div class="px-4 sm:px-0 m-10">
+            {% if  is_granted("ROLE_ADMIN") %}
+            <button class="inline-block  hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">
+                <a href="{{ path('app_travaux_edit', {'id': travaux.id}) }}">éditer tout le bon</a>
+            </button>
+            {% endif %}
+            <h3 class="text-base font-semibold leading-7 dark:text-white">Bon de Travaux N° : {{ travaux.numero }}</h3>
+        </div>
+        <div class="mt-6 border-t border-white-100">
+            <dl class="divide-y divide-white-100">
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Année</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.year }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Début</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.startedAt ? travaux.startedAt|date('d-m-Y') : '' }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Fin</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.finishedAt ? travaux.finishedAt|date('d-m-Y') : '' }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Prix Initial</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.price }} &#8364;</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Dernier RDV</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.rdvAt ? travaux.rdvAt|date('d-m-Y') : '' }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Commande</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.commande }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Type</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.type.name }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Secteur</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.secteur.name }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Etat</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.etat.name }}</dd>
+                </div>
+                <div class="px-1 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt class="text-sm font-medium dark:text-white-900">Chargé de Secteur</dt>
+                    <dd class="mt-1 text-sm dark:text-white-700 sm:col-span-2 sm:mt-0">{{ travaux.user.firstname }} {{ travaux.user.lastname }}</dd>
+                </div>
+            </dl> 
+        </div>
+        {% if  is_granted("ROLE_ADMIN") %}
+        {{ form_start(formShow, {'attr': {'class': 'max-w-xl  mx-auto border border-gray-600 rounded-lg p-6'}}) }}
+            <div class="relative z-0 w-full mb-5 group">
+                {{ form_widget(formShow.rdv_at, {
+                    'attr': {
+                        'class': 'mb-5 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                        'placeholder': ' ',
+                        'required': true       
+                    }
+                }) }}
+                <label for="travaux_rdv_at" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Date du dernier RDV</label>
+            </div>
+            <div class="relative z-0 w-full mb-5 group">
+                {{ form_widget(formShow.etat, {
+                'attr': {
+                    'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500'
+                }
+                }) }}
+                <label for="travaux_etat" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Etat</label>
+            </div>
+            <button type="submit"class="mt-2 inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3  ">Modifier</button>  
+        {{ form_end(formShow) }}
+        {% endif %}    
+    </div>
+    <div class="my-5 inline-block  w-2/5">
+        {% for index, file in travaux.files %}
+            <div id="fileEmbed{{ index }}" class="pdf-embed" style="display: {% if index == 0 %}block{% else %}none{% endif %};">
+                <embed src="http://localhost/perso/proxiserveV2/public/images/{{ file.fileName }}" type="application/pdf" width="100%" height="600px" />
+            </div>
+        {% endfor %}
+        <div class="text-center mt-3">
+            {% for index, file in travaux.files %}
+                <button type="button" class="inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 " onclick="showFileEmbed({{ index }})">Voir Fichier {{ index + 1 }}</button>
+            {% endfor %}
+        </div>
+        {% if  is_granted("ROLE_ADMIN") %}
+        {{ form_start(formFile, {'attr': {'class': 'max-w-sm mx-auto'}}) }}
+                {{ form_widget(formFile.file, {
+            'attr': {
+                'class': 'block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400'
+            }
+        }) }}
+        <label for="travaux_file" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Ajouter un fichier</label>
+        <button type="submit"class="m-2 inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter un Fichier</button>  
+        {{ form_end(formFile) }}
+        {% endif %} 
+    </div>  
+    <div class="mt-20 ms-10 flex flex-col h-96 flex-grow  w-1/3 bg-white dark:bg-gray-900 shadow-xl rounded-lg ">
+        <h3 class="text-center font-semibold leading-7 dark:text-white">Commentaires</h3>
+	    <div class="flex flex-col  flex-grow h-0 p-4 overflow-auto">
+            {% for comment in travaux.comments %}
+                {% if comment.user != user %}   
+		            <div class="flex w-full mt-2 space-x-3 max-w-xs">
+		            	<div class="dark:text-gray-400 text-xs">{{comment.user.firstname}} {{comment.user.lastname}}
+                        </div>
+		            	<div>
+		            		<div class="bg-gray-300 p-3 rounded-r-lg rounded-bl-lg">
+		            			<p class="text-sm">{{ comment.content }}</p>
+		            		</div>
+		            		<span class="text-xs text-gray-500 leading-none">{{ comment.publishedAt ? comment.publishedAt|date('d-m-Y H:i') : '' }}</span>
+		            	</div>
+		            </div>
+                    {% else %}
+                    <div class="flex w-full mt-2 space-x-3 max-w-xs ml-auto justify-end">  
+                        <div>
+					        <div class="bg-blue-600 text-white p-3 rounded-l-lg rounded-br-lg">
+						        <p class="text-sm">{{ comment.content }}</p>
+					        </div>
+					        <span class="text-xs text-gray-500 leading-none">{{ comment.publishedAt ? comment.publishedAt|date('d-m-Y H:i') : '' }}</span>
+				        </div>
+                        <div class="dark:text-gray-400 text-xs">{{comment.user.firstname}} {{comment.user.lastname}}
+                        </div>
+			        </div>    
+                    {% endif %}	
+            {% endfor %} 
+            
+        {{ form_start(formComment, {'attr': {'class': ' mx-4'}}) }}
+            {{ form_widget(formComment.content, {
+                'attr': {
+                    'class': 'm-2 bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500',
+                    'placeholder': ' ',
+                    'required': true       
+                }
+            }) }}
+            <button type="submit"class="m-2 content-center inline-block hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2 ">Ajouter un commentaire</button>  
+        {{ form_end(formComment) }}
+    </div>      
+</div>    
+
+	
+<script>
+    function showFileEmbed(index) {
+        // Masquer tous les fichiers
+        var files = document.querySelectorAll('.pdf-embed');
+        files.forEach(function(file) {
+            file.style.display = 'none';
+        });
+
+        // Afficher le fichier correspondant à l'index
+        var fileToDisplay = document.getElementById('fileEmbed' + index);
+        if (fileToDisplay) {
+            fileToDisplay.style.display = 'block';
+        }
+    }
+</script>
+
+
+{% endblock %}
